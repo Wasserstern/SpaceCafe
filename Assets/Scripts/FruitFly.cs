@@ -5,7 +5,6 @@ using UnityEngine;
 public class FruitFly : MonoBehaviour
 {
     public float damage;
-    
     public float attackInterval;
 
     public float moveTimeInSeconds;

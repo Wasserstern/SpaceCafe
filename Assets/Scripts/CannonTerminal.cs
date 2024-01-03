@@ -76,7 +76,6 @@ public class CannonTerminal : Terminal{
             Vector2 shootDirection = -((Vector2)cannonAnchor.transform.position - (Vector2)cannon.transform.position).normalized;
             shootItem.rgbd.gravityScale = 0f;
             shootItem.rgbd.AddForce(shootDirection * shootForce, ForceMode2D.Impulse);
-            shootItem.Activate();
             currentVisibilityTime = 0f;
         }
     }

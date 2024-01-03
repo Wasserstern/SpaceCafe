@@ -7,6 +7,7 @@ public class AllManager : MonoBehaviour
     public Actions actions;
     public Camera mainCamera;
     public GameObject customerPrefab;
+    public GameObject fruitFlyPrefab;
     
     // Difficulty settings
     public int difficultyLevel;
@@ -29,6 +30,7 @@ public class AllManager : MonoBehaviour
         public GameObject itemPrefab;
         public GameObject treePrefab;
         public Sprite sprite;
+        public Sprite decaySprite;
         
     }
 

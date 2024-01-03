@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [Range(0f, 90f)]
     public float throwAngle;
     public float plantDepth;
+    public float treePlantDistance;
 
     public float cafeCamSize;
     public float terminalCamSize;
@@ -174,10 +175,16 @@ public class Player : MonoBehaviour
     }
     private void Plant(InputAction.CallbackContext conext){
         if(isOnSoil){
-            GameObject topItem = items.Pop();
-            GameObject newTree = GameObject.Instantiate(allmng.itemDataset[(int)topItem.GetComponent<Item>().type].treePrefab);
-            GameObject.Destroy(topItem);
-            newTree.transform.position = nextTreePosition;
+            Collider2D[] nearbyTreeColliders = Physics2D.OverlapBoxAll(nextTreePosition, new Vector2(treePlantDistance * 2f, 0.1f), 0f, LayerMask.GetMask("Tree"));
+            if(nearbyTreeColliders.Length == 0){
+                GameObject topItem = items.Pop();
+                GameObject newTree = GameObject.Instantiate(allmng.itemDataset[(int)topItem.GetComponent<Item>().type].treePrefab);
+                GameObject.Destroy(topItem);
+                newTree.transform.position = nextTreePosition;
+            }
+            else{
+                // TODO: Show some popup telling the player that another tree is too close
+            }
         }
     }
     private void Move(InputAction.CallbackContext context){
