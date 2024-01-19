@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FruitFly : MonoBehaviour
 {
+    public float health;
     public float damage;
     public float attackInterval;
 
@@ -13,6 +14,7 @@ public class FruitFly : MonoBehaviour
 
     public float minMoveInterval;
     public float maxMoveInterval;
+    public float damageTreshhold;
 
     float moveInterval;
     float attackTimer;
@@ -65,5 +67,18 @@ public class FruitFly : MonoBehaviour
             yield return null;
         }
         isMoving = false;
+    }
+    private void OnTriggerEnter2D(Collider2D other){
+        if(other.gameObject.layer == LayerMask.NameToLayer("Player")){
+            other.gameObject.GetComponent<Player>().Damage(damage, (Vector2)transform.position);
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D other){
+        if(other.relativeVelocity.magnitude >= damageTreshhold){
+            health -= 1f;
+            if(health <= 0){
+                Destroy(this.gameObject);
+            }
+        }
     }
 }

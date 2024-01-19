@@ -9,12 +9,14 @@ public class Player : MonoBehaviour
     AllManager allmng;
     Rigidbody2D rgbd;
     Collider2D col;
+    GameObject itemHighlight;
 
     Actions actions;
     InputActionMap currentActionMap;
 
     // General settings
     public int coins;
+    public float health;
     public float maxMoveSpeed;
     public float moveAcceleration;
     public float moveDeceleration;
@@ -22,6 +24,8 @@ public class Player : MonoBehaviour
     public float throwForce;
     public float groundCheckDistance;
     public float pickupDistance;
+    public float pickupBoxX;
+    public float pickupBoxY;
     public float itemHeight;
     public float terminalRadius;
     public int maxItems;
@@ -37,6 +41,9 @@ public class Player : MonoBehaviour
     // Various elements
     Stack<GameObject> items;
     float xInput;
+    float yInput;
+    [SerializeField]
+    Vector2 lookDirection;
     Camera mainCamera;
 
     Coroutine camCoroutine = null;
@@ -55,6 +62,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     bool isOnSoil = false;
     Vector2 nextTreePosition;
+    
+    GameObject nearbyItem;
     void Awake(){
    
     }
@@ -63,15 +72,16 @@ public class Player : MonoBehaviour
     void Start()
     {
         allmng = GameObject.Find("AllManager").GetComponent<AllManager>();
+        itemHighlight = GameObject.Find("ItemHighlight");
         mainCamera = allmng.mainCamera;
         actions = allmng.actions;
         currentActionMap = actions.PlayerMoveCafe;
         actions.PlayerMoveCafe.Jump.performed += Jump;
         actions.PlayerMoveCafe.Pickup.performed += Pickup;
         actions.PlayerMoveCafe.Throw.performed += Throw;
-        actions.PlayerMoveCafe.Move.performed += Move;
         actions.PlayerMoveCafe.UseTerminal.performed += ToggleTerminal;
         actions.PlayerMoveCafe.Plant.performed += Plant;
+        actions.PlayerMoveCafe.Harvest.performed += Harvest;
         items = new Stack<GameObject>();
         rgbd = GetComponent<Rigidbody2D>();
         col= GetComponent<Collider2D>();
@@ -82,6 +92,7 @@ public class Player : MonoBehaviour
             itemSlot.transform.localPosition = new Vector2(0, itemHeight * i + playerHeight);
         }
         currentActionMap.Enable();
+        StartCoroutine(ChangeCamSize(cafeCamSize));
     }
     void OnDisable(){
         currentActionMap.Disable();
@@ -90,14 +101,55 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Check movement value
-        xInput = actions.PlayerMoveCafe.Move.ReadValue<float>();
+        xInput = actions.PlayerMoveCafe.Horizontal.ReadValue<float>();
+        yInput = actions.PlayerMoveCafe.Vertical.ReadValue<float>();
+        Vector2 pickupBoxSize = new Vector2(pickupBoxX, pickupBoxY);
+        if(xInput != 0){
+          lookDirection = new Vector2(xInput, 0f);  
+        }
+        else if(yInput != 0){
+            lookDirection = new Vector2(0f, yInput);
+        }
+        if(lookDirection.x == 0){
+            pickupBoxSize = new Vector2(pickupBoxY, pickupBoxY);
+        }
+
+        // Get closest item via look direction
+        Collider2D[] nearbyItemColliders = Physics2D.OverlapBoxAll((Vector2)transform.position + lookDirection * 1.5f, pickupBoxSize, 0f, LayerMask.GetMask("Item"));
+        if(nearbyItemColliders.Length > 0){
+            float minDistance = 999f;
+            GameObject closestItem = null;
+            foreach(Collider2D itemCollider in nearbyItemColliders){
+                float itemDistance = Vector2.Distance((Vector2)transform.position, (Vector2)itemCollider.gameObject.transform.position);
+                if(itemDistance < minDistance){
+                    minDistance = itemDistance;
+                    closestItem = itemCollider.gameObject;
+                }
+            }
+            nearbyItem = closestItem;
+            itemHighlight.transform.position = nearbyItem.transform.position;
+        }
+        else{
+            nearbyItem = null;
+            itemHighlight.transform.position = new Vector2(-9999, -9999f);
+        }
+
         
         // Check ground
-        RaycastHit2D groundHit = Physics2D.Raycast(transform.position, (new Vector2(transform.position.x, transform.position.y -1) - (Vector2)transform.position).normalized, groundCheckDistance, LayerMask.GetMask("Ground", "Item", "Soil"));
+        RaycastHit2D groundHit = Physics2D.Raycast(transform.position, (new Vector2(transform.position.x, transform.position.y -1) - (Vector2)transform.position).normalized, groundCheckDistance, LayerMask.GetMask("Ground", "Item", "Soil", "Platform"));
         isGrounded = groundHit.collider != null;
         isOnSoil = isGrounded && groundHit.collider.gameObject.layer == LayerMask.NameToLayer("Soil");
         if(isOnSoil){
             nextTreePosition = new Vector2(groundHit.point.x, transform.position.y - plantDepth);
+        }
+
+        if(yInput < 0){
+            Debug.Log("Should Try fall through");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, (new Vector2(transform.position.x, transform.position.y - 1) - (Vector2)transform.position).normalized, groundCheckDistance, LayerMask.GetMask("Platform"));
+            if(hit.collider != null){
+                Debug.Log("Platform found");
+                hit.collider.GetComponent<OneWayPlatform>().FallThrough();
+            }
         }
         
         Vector2 nextVelocity = new Vector2();
@@ -145,7 +197,10 @@ public class Player : MonoBehaviour
     }
 
     private void Pickup(InputAction.CallbackContext context){
+   
+        
         Debug.Log("Pickup");
+        /* UNCOMMENT FOR DOWN DIRECTION PICKUP
         RaycastHit2D itemHit = Physics2D.Raycast(transform.position, (new Vector2(transform.position.x, transform.position.y -1) - (Vector2)transform.position).normalized, pickupDistance, LayerMask.GetMask("Item"));
         if(itemHit.collider != null && items.Count < maxItems){
             GameObject item = itemHit.collider.gameObject;
@@ -154,6 +209,14 @@ public class Player : MonoBehaviour
             item.transform.localPosition = new Vector3(0, 0, 0);
             items.Push(item);
         }
+        */
+        if(nearbyItem != null && items.Count < maxItems){
+            nearbyItem.transform.GetComponent<Rigidbody2D>().simulated = false;
+            nearbyItem.transform.SetParent(transform.GetChild(items.Count));
+            nearbyItem.transform.localPosition = new Vector3(0, 0, 0);
+            items.Push(nearbyItem);
+        }
+        
     }
     private void Throw(InputAction.CallbackContext context){
         Debug.Log("Throw");
@@ -173,7 +236,23 @@ public class Player : MonoBehaviour
             item.GetComponent<Rigidbody2D>().AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
         }
     }
-    private void Plant(InputAction.CallbackContext conext){
+    private void ThrowStraight(InputAction.CallbackContext context){
+        if(items.Count > 0){
+            GameObject throwItem = items.Pop();
+            throwItem.transform.SetParent(null);
+            throwItem.GetComponent<Rigidbody2D>().simulated = true;
+            Vector2 throwDirection = new Vector2();
+            if(isFacingRight){
+                throwDirection = (new Vector2(throwItem.transform.position.x +1, throwItem.transform.position.y) - (Vector2)throwItem.transform.position).normalized;
+            }
+            else{
+                throwDirection = (new Vector2(throwItem.transform.position.x +1, throwItem.transform.position.y) - (Vector2)throwItem.transform.position).normalized;
+            }
+            throwItem.GetComponent<Rigidbody2D>().AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
+        }
+    }
+    private void Plant(InputAction.CallbackContext context){
+        Debug.Log("Plant");
         if(isOnSoil){
             Collider2D[] nearbyTreeColliders = Physics2D.OverlapBoxAll(nextTreePosition, new Vector2(treePlantDistance * 2f, 0.1f), 0f, LayerMask.GetMask("Tree"));
             if(nearbyTreeColliders.Length == 0){
@@ -185,6 +264,14 @@ public class Player : MonoBehaviour
             else{
                 // TODO: Show some popup telling the player that another tree is too close
             }
+        }
+    }
+    private void Harvest(InputAction.CallbackContext context){
+        Debug.Log("Harvest");
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, (new Vector2(transform.position.x, transform.position.y - 1) - (Vector2)transform.position).normalized, 2f, LayerMask.GetMask("Tree"));
+        if(hit.collider != null){
+            Debug.Log("Trying to harvest tree");
+            hit.collider.gameObject.GetComponent<Tree>().HarvestTree();
         }
     }
     private void Move(InputAction.CallbackContext context){
@@ -232,6 +319,26 @@ public class Player : MonoBehaviour
             yield return null;
         }
     }
+
+    public void Damage(float damage){
+        health -= damage;
+        if(health <= 0f){
+            Destroy(this.gameObject);
+        }
+    }
+    public void Damage(float damage, Vector2 damageSource){
+        Vector2 toPlayerDirection = ((Vector2)transform.position - damageSource).normalized;
+        Vector2 pushPoint = new Vector2(transform.position.x + toPlayerDirection.x, transform.position.y + toPlayerDirection.y);
+        Vector2 pushDirection = (pushPoint - (Vector2)transform.position).normalized;
+
+        rgbd.AddForce(pushDirection * damage, ForceMode2D.Impulse);
+        health -= damage;
+        if(health <= 0f){
+            Destroy(this.gameObject);
+        }
+    }
+
+    
 
     private void OnCollisionEnter2D(Collision2D other){
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tree : MonoBehaviour
@@ -8,7 +9,7 @@ public class Tree : MonoBehaviour
     AllManager allmng;
     public Item.ItemType fruitType;
     public GameObject branchPrefab;
-    public string production;
+    public string[] productions;
     public int iterations;
     public float angleStep;
     public float treeGrowTime;
@@ -26,6 +27,7 @@ public class Tree : MonoBehaviour
     bool coroutineRunning = false;
 
     float currentGrowTime;
+    bool isGrown;
     void Start()
     {
         allmng = GameObject.Find("AllManager").GetComponent<AllManager>();
@@ -39,7 +41,8 @@ public class Tree : MonoBehaviour
             string nextString = "";
             foreach(char c in currentString){
                 if(c == 'F'){
-                    nextString += production;
+                    int productionIndex = UnityEngine.Random.Range(0, productions.Length);
+                    nextString += productions[productionIndex];
                 }
                 else{
                     nextString += c;
@@ -56,6 +59,8 @@ public class Tree : MonoBehaviour
                     newBranch.transform.position = turtle.branchEnd;
                     newBranch.transform.rotation = Quaternion.Euler(0f, 0f, turtle.angle);
                     newBranch.transform.SetParent(turtle.branchTransform);
+                    newBranch.GetComponent<Branch>().branchDepth = turtle.depth;
+                    newBranch.GetComponent<Branch>().treeGrowTime = treeGrowTime;
                     //newBranch.transform.localScale /= turtle.depth;
                     turtle = (newBranch.transform, (Vector2)newBranch.transform.GetChild(0).position, turtle.angle, turtle.depth);
                     branchElementData.Enqueue((turtle.branchEnd, turtle.angle, turtle.depth));
@@ -84,22 +89,16 @@ public class Tree : MonoBehaviour
                 }
             }
         }
-        foreach(Transform fruitTransform in fruitTransforms){
-            if(UnityEngine.Random.Range(0f, 1f) < fruitChance){
-                GameObject newFruit = GameObject.Instantiate(allmng.itemDataset[(int)fruitType].itemPrefab);
-                newFruit.transform.parent = fruitTransform;
-                newFruit.transform.position = fruitTransform.position;
-                fruits.Add(newFruit);
-            }
-        }
+        
     }
 
     public void HarvestTree(){
-        for(int i = fruits.Count; i >= 0; i--){
+        Debug.Log("Tree should drop fruits.");
+        for(int i = fruits.Count -1; i >= 0; i--){
             GameObject fruit = fruits[i];
             Item fruitItem = fruit.GetComponent<Item>();
             if(fruitItem.canBeHarvested){
-                fruitItem.Harvest();
+                fruitItem.HarvestFruit();
                 fruits.RemoveAt(i);
             }
         }
@@ -113,8 +112,19 @@ public class Tree : MonoBehaviour
             StartCoroutine(GrowBranch(branchElementData.Dequeue()));
         }
        */
-       if(currentGrowTime >= treeGrowTime){
-
+       if(!isGrown && currentGrowTime >= treeGrowTime){
+            foreach(Transform fruitTransform in fruitTransforms){
+                if(UnityEngine.Random.Range(0f, 1f) < fruitChance){
+                    GameObject newFruit = GameObject.Instantiate(allmng.itemDataset[(int)fruitType].itemPrefab);
+                    fruitTransform.AddComponent<Rigidbody2D>();
+                    Rigidbody2D branchRgbd = fruitTransform.GetComponent<Rigidbody2D>();
+                    branchRgbd.isKinematic = true;
+                    newFruit.GetComponent<SpringJoint2D>().connectedBody = branchRgbd;
+                    newFruit.transform.position = fruitTransform.position;
+                    fruits.Add(newFruit);
+                }
+            }
+            isGrown = true;
        }
        currentGrowTime += Time.deltaTime;
     }

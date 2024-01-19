@@ -129,6 +129,7 @@ public class CannonTerminal : Terminal{
     }
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.layer == LayerMask.NameToLayer("Storage")){
+            
             Item lostItem = other.gameObject.GetComponent<Item>();
             int lostItemIndex = storage[(int)other.gameObject.GetComponent<Item>().type].FindIndex(item => item.GetInstanceID() == lostItem.GetInstanceID());
             storage[(int)other.gameObject.GetComponent<Item>().type].RemoveAt(lostItemIndex);

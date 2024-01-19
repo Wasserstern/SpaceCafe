@@ -8,7 +8,7 @@ public class LTree : MonoBehaviour
     AllManager allmng;
     public Item.ItemType fruitType;
     public GameObject branchPrefab;
-    public string production;
+    public string[] productions;
     public int iterations;
     public float angleStep;
     public float branchGrowTime;
@@ -35,7 +35,7 @@ public class LTree : MonoBehaviour
             string nextString = "";
             foreach(char c in currentString){
                 if(c == 'F'){
-                    nextString += production;
+                    nextString += productions[UnityEngine.Random.Range(0, productions.Length)];
                 }
                 else{
                     nextString += c;
@@ -83,8 +83,10 @@ public class LTree : MonoBehaviour
         foreach(Vector2 position in fruitPositions){
             if(UnityEngine.Random.Range(0f, 1f) < fruitChance){
                 GameObject newFruit = GameObject.Instantiate(allmng.itemDataset[(int)fruitType].itemPrefab);
+                
                 newFruit.transform.parent = transform;
                 newFruit.transform.position = position;
+
                 newFruit.GetComponent<Rigidbody2D>().simulated = false;
             }
         }

@@ -28,7 +28,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             ""id"": ""ca00320d-462d-4814-8d58-a4801285cb93"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""Horizontal"",
                     ""type"": ""Value"",
                     ""id"": ""6b044cfc-9755-4602-8c51-fc06f98c29d5"",
                     ""expectedControlType"": ""Axis"",
@@ -80,6 +80,33 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Harvest"",
+                    ""type"": ""Button"",
+                    ""id"": ""764d1a2a-7b9d-40b8-a447-3a951a84c497"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""yAxis"",
+                    ""type"": ""Button"",
+                    ""id"": ""712bd304-de9b-466c-82f1-1ff9eb7621af"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Vertical"",
+                    ""type"": ""Button"",
+                    ""id"": ""0adc46e7-808a-4892-a9d7-cc749adcfe17"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -90,7 +117,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -101,7 +128,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -112,7 +139,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -123,7 +150,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -134,7 +161,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -145,7 +172,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -156,7 +183,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -167,7 +194,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -178,7 +205,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -346,6 +373,149 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Plant"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ccd4e21e-17bd-44b6-a013-ed13a5377ce6"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Harvest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8bfc81cb-7d49-4767-92f2-8c4627f939f8"",
+                    ""path"": ""<SwitchProControllerHID>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Harvest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c221767f-ef04-40da-bf48-54464c0a0fc9"",
+                    ""path"": ""<XInputController>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Harvest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dbb63418-ad14-4192-bbdd-34b084b6dd66"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""yAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""XboxController"",
+                    ""id"": ""f4086c52-668a-43da-ba88-76f050b9c155"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""fc3b6524-cd19-4e32-9e3f-ebcd1c6a2317"",
+                    ""path"": ""<XInputController>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""b9d4fab7-100d-4c4d-b41c-ddd1428a6c02"",
+                    ""path"": ""<XInputController>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Switch"",
+                    ""id"": ""5bb2eb33-e272-41af-bb3c-bb9fccbabaa5"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""af501c20-ecc8-4a65-994d-0d1dc175dfbe"",
+                    ""path"": ""<SwitchProControllerHID>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""a349e0d9-9ef9-4d2f-9d61-d0f057605660"",
+                    ""path"": ""<SwitchProControllerHID>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""a20d06f0-fdff-48cb-aff3-5f52dd864739"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""06c2ca45-589a-461e-a12d-0a9616afaee9"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""f81c3e69-5920-4f9a-937d-20a90c723f5e"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -638,12 +808,15 @@ public partial class @Actions: IInputActionCollection2, IDisposable
 }");
         // PlayerMoveCafe
         m_PlayerMoveCafe = asset.FindActionMap("PlayerMoveCafe", throwIfNotFound: true);
-        m_PlayerMoveCafe_Move = m_PlayerMoveCafe.FindAction("Move", throwIfNotFound: true);
+        m_PlayerMoveCafe_Horizontal = m_PlayerMoveCafe.FindAction("Horizontal", throwIfNotFound: true);
         m_PlayerMoveCafe_Jump = m_PlayerMoveCafe.FindAction("Jump", throwIfNotFound: true);
         m_PlayerMoveCafe_Pickup = m_PlayerMoveCafe.FindAction("Pickup", throwIfNotFound: true);
         m_PlayerMoveCafe_Throw = m_PlayerMoveCafe.FindAction("Throw", throwIfNotFound: true);
         m_PlayerMoveCafe_UseTerminal = m_PlayerMoveCafe.FindAction("UseTerminal", throwIfNotFound: true);
         m_PlayerMoveCafe_Plant = m_PlayerMoveCafe.FindAction("Plant", throwIfNotFound: true);
+        m_PlayerMoveCafe_Harvest = m_PlayerMoveCafe.FindAction("Harvest", throwIfNotFound: true);
+        m_PlayerMoveCafe_yAxis = m_PlayerMoveCafe.FindAction("yAxis", throwIfNotFound: true);
+        m_PlayerMoveCafe_Vertical = m_PlayerMoveCafe.FindAction("Vertical", throwIfNotFound: true);
         // CannonTerminal
         m_CannonTerminal = asset.FindActionMap("CannonTerminal", throwIfNotFound: true);
         m_CannonTerminal_Steer = m_CannonTerminal.FindAction("Steer", throwIfNotFound: true);
@@ -712,22 +885,28 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     // PlayerMoveCafe
     private readonly InputActionMap m_PlayerMoveCafe;
     private List<IPlayerMoveCafeActions> m_PlayerMoveCafeActionsCallbackInterfaces = new List<IPlayerMoveCafeActions>();
-    private readonly InputAction m_PlayerMoveCafe_Move;
+    private readonly InputAction m_PlayerMoveCafe_Horizontal;
     private readonly InputAction m_PlayerMoveCafe_Jump;
     private readonly InputAction m_PlayerMoveCafe_Pickup;
     private readonly InputAction m_PlayerMoveCafe_Throw;
     private readonly InputAction m_PlayerMoveCafe_UseTerminal;
     private readonly InputAction m_PlayerMoveCafe_Plant;
+    private readonly InputAction m_PlayerMoveCafe_Harvest;
+    private readonly InputAction m_PlayerMoveCafe_yAxis;
+    private readonly InputAction m_PlayerMoveCafe_Vertical;
     public struct PlayerMoveCafeActions
     {
         private @Actions m_Wrapper;
         public PlayerMoveCafeActions(@Actions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_PlayerMoveCafe_Move;
+        public InputAction @Horizontal => m_Wrapper.m_PlayerMoveCafe_Horizontal;
         public InputAction @Jump => m_Wrapper.m_PlayerMoveCafe_Jump;
         public InputAction @Pickup => m_Wrapper.m_PlayerMoveCafe_Pickup;
         public InputAction @Throw => m_Wrapper.m_PlayerMoveCafe_Throw;
         public InputAction @UseTerminal => m_Wrapper.m_PlayerMoveCafe_UseTerminal;
         public InputAction @Plant => m_Wrapper.m_PlayerMoveCafe_Plant;
+        public InputAction @Harvest => m_Wrapper.m_PlayerMoveCafe_Harvest;
+        public InputAction @yAxis => m_Wrapper.m_PlayerMoveCafe_yAxis;
+        public InputAction @Vertical => m_Wrapper.m_PlayerMoveCafe_Vertical;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMoveCafe; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -737,9 +916,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerMoveCafeActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerMoveCafeActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
+            @Horizontal.started += instance.OnHorizontal;
+            @Horizontal.performed += instance.OnHorizontal;
+            @Horizontal.canceled += instance.OnHorizontal;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -755,13 +934,22 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Plant.started += instance.OnPlant;
             @Plant.performed += instance.OnPlant;
             @Plant.canceled += instance.OnPlant;
+            @Harvest.started += instance.OnHarvest;
+            @Harvest.performed += instance.OnHarvest;
+            @Harvest.canceled += instance.OnHarvest;
+            @yAxis.started += instance.OnYAxis;
+            @yAxis.performed += instance.OnYAxis;
+            @yAxis.canceled += instance.OnYAxis;
+            @Vertical.started += instance.OnVertical;
+            @Vertical.performed += instance.OnVertical;
+            @Vertical.canceled += instance.OnVertical;
         }
 
         private void UnregisterCallbacks(IPlayerMoveCafeActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
+            @Horizontal.started -= instance.OnHorizontal;
+            @Horizontal.performed -= instance.OnHorizontal;
+            @Horizontal.canceled -= instance.OnHorizontal;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -777,6 +965,15 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Plant.started -= instance.OnPlant;
             @Plant.performed -= instance.OnPlant;
             @Plant.canceled -= instance.OnPlant;
+            @Harvest.started -= instance.OnHarvest;
+            @Harvest.performed -= instance.OnHarvest;
+            @Harvest.canceled -= instance.OnHarvest;
+            @yAxis.started -= instance.OnYAxis;
+            @yAxis.performed -= instance.OnYAxis;
+            @yAxis.canceled -= instance.OnYAxis;
+            @Vertical.started -= instance.OnVertical;
+            @Vertical.performed -= instance.OnVertical;
+            @Vertical.canceled -= instance.OnVertical;
         }
 
         public void RemoveCallbacks(IPlayerMoveCafeActions instance)
@@ -874,12 +1071,15 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     public CannonTerminalActions @CannonTerminal => new CannonTerminalActions(this);
     public interface IPlayerMoveCafeActions
     {
-        void OnMove(InputAction.CallbackContext context);
+        void OnHorizontal(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnUseTerminal(InputAction.CallbackContext context);
         void OnPlant(InputAction.CallbackContext context);
+        void OnHarvest(InputAction.CallbackContext context);
+        void OnYAxis(InputAction.CallbackContext context);
+        void OnVertical(InputAction.CallbackContext context);
     }
     public interface ICannonTerminalActions
     {

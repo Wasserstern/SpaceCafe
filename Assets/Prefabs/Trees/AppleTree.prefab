@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6567000436177560444
+--- !u!1 &1056089975117325439
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2677667806685831003}
-  - component: {fileID: 2489994430109323923}
-  - component: {fileID: 4689815876643348193}
-  m_Layer: 0
+  - component: {fileID: 3262604893542483914}
+  - component: {fileID: 7744597801715702887}
+  - component: {fileID: 1627317043396350581}
+  m_Layer: 15
   m_Name: AppleTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2677667806685831003
+--- !u!4 &3262604893542483914
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6567000436177560444}
+  m_GameObject: {fileID: 1056089975117325439}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.5953107, y: 1.05, z: 0}
@@ -33,32 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2489994430109323923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6567000436177560444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63f7c33d524ed9748b17a2dcab04ebab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fruitType: 0
-  branchPrefab: {fileID: 2401651694650015748, guid: 38c42d74f1612b448be9ed769de1dc27, type: 3}
-  production: F[+F]F[-F][F]
-  iterations: 2
-  angleStep: 20
-  branchGrowTime: 0.1
-  fruitChance: 0.45
---- !u!61 &4689815876643348193
+--- !u!61 &7744597801715702887
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6567000436177560444}
+  m_GameObject: {fileID: 1056089975117325439}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -81,7 +62,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -97,3 +78,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1627317043396350581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056089975117325439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1141e13e2a88f5469d8ffe074998b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruitType: 0
+  branchPrefab: {fileID: 2401651694650015748, guid: 38c42d74f1612b448be9ed769de1dc27, type: 3}
+  productions:
+  - "F[+F]F[\u2212F][-F[-F]]"
+  - F[+F[-F]]
+  - "F[\u2212F[-F]]F"
+  iterations: 3
+  angleStep: 20
+  treeGrowTime: 3
+  fruitChance: 0.45

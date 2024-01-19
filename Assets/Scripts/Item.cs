@@ -36,7 +36,8 @@ public class Item : MonoBehaviour
 
     void Update()
     {
-        if(!onTree){
+        if(currentGrowTime >= growTime){
+            canBeHarvested = true;
             if(health <= 0f){
                 Destroy(this.gameObject);
             }
@@ -56,22 +57,20 @@ public class Item : MonoBehaviour
             currentExpireTime += Time.deltaTime;
         }
         else{
-            if(currentGrowTime >= growTime){
-                canBeHarvested = true;
-            }
+            float growthFactor = currentGrowTime / growTime;
+            transform.localScale = new Vector3(growthFactor, growthFactor, growthFactor);
             currentGrowTime += Time.deltaTime;
         }
 
     }
     void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.layer == LayerMask.NameToLayer("StoragePickup")){
+        if(other.gameObject.layer == LayerMask.NameToLayer("StoragePickup") && !onTree){
             other.gameObject.GetComponentInParent<CannonTerminal>().AddItem(this);
         }
     }
 
-    public void Harvest(){
+    public void HarvestFruit(){
         onTree = false;
-        transform.SetParent(null);
         GetComponent<Joint2D>().enabled = false;
     }
 }
