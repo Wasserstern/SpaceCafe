@@ -7,7 +7,7 @@ public class Item : MonoBehaviour
 {
     AllManager allmng;
 
-    public enum ItemType {apple, coffeeBeans, coffee, sugar,applePie}
+    public enum ItemType {apple, coffeeBeans, coffee, sugar,applePie, wateringCan}
     
     public Rigidbody2D rgbd;
     SpriteRenderer spriteRenderer;
@@ -24,6 +24,7 @@ public class Item : MonoBehaviour
 
     public bool onTree;
     public bool canBeHarvested;
+    public bool canBeHold = true;
     void Start()
     {
         allmng = GameObject.Find("AllManager").GetComponent<AllManager>();
@@ -63,9 +64,23 @@ public class Item : MonoBehaviour
         }
 
     }
+    public void UseItemEffect(){
+        switch(type){
+            case ItemType.apple:{
+                GameObject.Find("Player").GetComponent<Player>().health += 1f;
+                break;
+            }
+            case ItemType.wateringCan:{
+                break;
+            }
+        }
+    }
     void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.layer == LayerMask.NameToLayer("StoragePickup") && !onTree){
             other.gameObject.GetComponentInParent<CannonTerminal>().AddItem(this);
+        }
+        else if(other.gameObject.layer == LayerMask.NameToLayer("MixMachine")){
+            other.GetComponentInParent<MixMachine>().AddItem(this);
         }
     }
 

@@ -107,6 +107,15 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""b83c929e-b730-4e0c-8393-7eba2d96e3b2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -516,6 +525,39 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b27b4082-09d2-4d81-8d01-33297d1faa9d"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""391bf99c-6566-48ad-aadb-8ba50ec283fe"",
+                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b69e7dd-48b3-4752-8ab0-3ac212353513"",
+                    ""path"": ""<SwitchProControllerHID>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -817,6 +859,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         m_PlayerMoveCafe_Harvest = m_PlayerMoveCafe.FindAction("Harvest", throwIfNotFound: true);
         m_PlayerMoveCafe_yAxis = m_PlayerMoveCafe.FindAction("yAxis", throwIfNotFound: true);
         m_PlayerMoveCafe_Vertical = m_PlayerMoveCafe.FindAction("Vertical", throwIfNotFound: true);
+        m_PlayerMoveCafe_UseItem = m_PlayerMoveCafe.FindAction("UseItem", throwIfNotFound: true);
         // CannonTerminal
         m_CannonTerminal = asset.FindActionMap("CannonTerminal", throwIfNotFound: true);
         m_CannonTerminal_Steer = m_CannonTerminal.FindAction("Steer", throwIfNotFound: true);
@@ -894,6 +937,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMoveCafe_Harvest;
     private readonly InputAction m_PlayerMoveCafe_yAxis;
     private readonly InputAction m_PlayerMoveCafe_Vertical;
+    private readonly InputAction m_PlayerMoveCafe_UseItem;
     public struct PlayerMoveCafeActions
     {
         private @Actions m_Wrapper;
@@ -907,6 +951,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         public InputAction @Harvest => m_Wrapper.m_PlayerMoveCafe_Harvest;
         public InputAction @yAxis => m_Wrapper.m_PlayerMoveCafe_yAxis;
         public InputAction @Vertical => m_Wrapper.m_PlayerMoveCafe_Vertical;
+        public InputAction @UseItem => m_Wrapper.m_PlayerMoveCafe_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMoveCafe; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -943,6 +988,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Vertical.started += instance.OnVertical;
             @Vertical.performed += instance.OnVertical;
             @Vertical.canceled += instance.OnVertical;
+            @UseItem.started += instance.OnUseItem;
+            @UseItem.performed += instance.OnUseItem;
+            @UseItem.canceled += instance.OnUseItem;
         }
 
         private void UnregisterCallbacks(IPlayerMoveCafeActions instance)
@@ -974,6 +1022,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Vertical.started -= instance.OnVertical;
             @Vertical.performed -= instance.OnVertical;
             @Vertical.canceled -= instance.OnVertical;
+            @UseItem.started -= instance.OnUseItem;
+            @UseItem.performed -= instance.OnUseItem;
+            @UseItem.canceled -= instance.OnUseItem;
         }
 
         public void RemoveCallbacks(IPlayerMoveCafeActions instance)
@@ -1080,6 +1131,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         void OnHarvest(InputAction.CallbackContext context);
         void OnYAxis(InputAction.CallbackContext context);
         void OnVertical(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
     public interface ICannonTerminalActions
     {

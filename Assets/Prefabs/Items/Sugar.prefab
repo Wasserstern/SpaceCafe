@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3388338051628364267}
   - component: {fileID: 6443910793695271824}
   - component: {fileID: 4565407585798850603}
-  - component: {fileID: 2379932887322234676}
   m_Layer: 7
   m_Name: Sugar
   m_TagString: Untagged
@@ -179,25 +178,6 @@ MonoBehaviour:
   expireTime: 120
   growTime: 5
   type: 3
-  onTree: 1
+  onTree: 0
   canBeHarvested: 0
---- !u!232 &2379932887322234676
-DistanceJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1836084941673765924}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 0
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0.5}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 0
-  m_Distance: 1
-  m_MaxDistanceOnly: 0
+  canBeHold: 1

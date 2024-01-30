@@ -14,7 +14,11 @@ public class Tree : MonoBehaviour
     public float angleStep;
     public float treeGrowTime;
     public float fruitChance;
-    
+    public float waterGrowthBoost;
+    public float dryTime;
+    public float maxWater;
+    public float currentWater;
+    public Transform absorbPoint;
     string currentString;
     Stack<(Transform currentTransform, Vector2 branchEnd, float angle, int depth)> turtleStates;
     Queue<(Vector2 position, float angle, int depth)> branchElementData;
@@ -26,7 +30,8 @@ public class Tree : MonoBehaviour
     (Transform branchTransform, Vector2 branchEnd, float angle, int depth) turtle;
     bool coroutineRunning = false;
 
-    float currentGrowTime;
+    public float currentGrowTime;
+    float currentDryTime;
     bool isGrown;
     void Start()
     {
@@ -60,7 +65,7 @@ public class Tree : MonoBehaviour
                     newBranch.transform.rotation = Quaternion.Euler(0f, 0f, turtle.angle);
                     newBranch.transform.SetParent(turtle.branchTransform);
                     newBranch.GetComponent<Branch>().branchDepth = turtle.depth;
-                    newBranch.GetComponent<Branch>().treeGrowTime = treeGrowTime;
+                    newBranch.GetComponent<Branch>().tree = this;
                     //newBranch.transform.localScale /= turtle.depth;
                     turtle = (newBranch.transform, (Vector2)newBranch.transform.GetChild(0).position, turtle.angle, turtle.depth);
                     branchElementData.Enqueue((turtle.branchEnd, turtle.angle, turtle.depth));
@@ -126,7 +131,22 @@ public class Tree : MonoBehaviour
             }
             isGrown = true;
        }
-       currentGrowTime += Time.deltaTime;
+       if(currentDryTime > dryTime){
+            if(currentWater > 0){
+                currentWater--;
+            }
+            dryTime = 0f;
+       }
+       if(currentWater >= maxWater / 2f){
+        currentGrowTime += Time.deltaTime * waterGrowthBoost;
+       }
+       else{
+            currentGrowTime += Time.deltaTime;
+       }
+       currentDryTime += Time.deltaTime;
+       if(currentWater > maxWater){
+        currentWater = maxWater;
+       }
     }
     /*
     IEnumerator GrowBranch((Vector2 position, float angle, int depth) branchData){

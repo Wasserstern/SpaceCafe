@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
         actions.PlayerMoveCafe.UseTerminal.performed += ToggleTerminal;
         actions.PlayerMoveCafe.Plant.performed += Plant;
         actions.PlayerMoveCafe.Harvest.performed += Harvest;
+        actions.PlayerMoveCafe.UseItem.performed += UseItem;
         items = new Stack<GameObject>();
         rgbd = GetComponent<Rigidbody2D>();
         col= GetComponent<Collider2D>();
@@ -224,7 +225,7 @@ public class Player : MonoBehaviour
             GameObject item = items.Pop();
             item.transform.SetParent(null);
             item.GetComponent<Rigidbody2D>().simulated = true;
-            Vector2 rightAxis = (new Vector2(transform.position.x + 1, transform.position.y) - (Vector2)transform.position).normalized;
+            Vector2 rightAxis = new Vector2(item.transform.position.x + 1, item.transform.position.y) - (Vector2)item.transform.position;
             Vector2 throwPoint = new Vector2(rightAxis.x * Mathf.Cos(throwAngle) - rightAxis.y * Mathf.Sin(throwAngle), 
                 rightAxis.x * Mathf.Sin(throwAngle) + rightAxis.y * Mathf.Cos(throwAngle)
             );
@@ -232,7 +233,16 @@ public class Player : MonoBehaviour
                 throwPoint = new Vector2(rightAxis.x * Mathf.Cos(180f - throwAngle) - rightAxis.y * Mathf.Sin(180f - throwAngle), 
                 rightAxis.x * Mathf.Sin(180f - throwAngle) + rightAxis.y * Mathf.Cos(180f - throwAngle));
             }
-            Vector2 throwDirection = (throwPoint - (Vector2)transform.position).normalized;
+            Debug.Log(throwPoint);
+
+            if(isFacingRight){
+                throwPoint = new Vector2(item.transform.position.x + 0.5f, item.transform.position.y +0.5f);
+            }
+            else{
+                throwPoint = new Vector2(item.transform.position.x - 0.5f, item.transform.position.y +0.5f);
+            }
+
+            Vector2 throwDirection = (throwPoint - (Vector2)item.transform.position).normalized;
             item.GetComponent<Rigidbody2D>().AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
         }
     }
@@ -277,6 +287,41 @@ public class Player : MonoBehaviour
     private void Move(InputAction.CallbackContext context){
         Debug.Log("Move");
 
+    }
+    private void UseItem(InputAction.CallbackContext context){
+        if(items.Count > 0){
+            GameObject item = items.Peek();
+            switch(item.GetComponent<Item>().type){
+                case Item.ItemType.apple:{
+                item = items.Pop();
+                GameObject.Find("Player").GetComponent<Player>().health += 1f;
+                Destroy(item.gameObject);
+                break;
+            }
+            case Item.ItemType.wateringCan:{
+                WateringCan wateringCan = item.GetComponent<WateringCan>();
+                if(wateringCan.currentWater > 0f){
+                    Collider2D[] plantColliderGroup = Physics2D.OverlapCircleAll(transform.position, 30f, LayerMask.GetMask("Tree"));
+                    if(plantColliderGroup.Length > 0){
+                        float minDistance = 9999f;
+                        Tree targetTree = plantColliderGroup[0].GetComponent<Tree>();
+                        foreach(Collider2D plantCollider in plantColliderGroup){
+                            float distanceToPlant = Vector2.Distance(plantCollider.transform.position, item.transform.position);
+                            if(distanceToPlant < minDistance){
+                                minDistance = distanceToPlant;
+                                targetTree = plantCollider.GetComponent<Tree>();
+                            }
+                        }
+                        // TODO: shoot
+                        StartCoroutine(wateringCan.Water(targetTree));
+                    }
+                }
+                
+                
+                break;
+            }
+            }
+        }
     }
 
     public void ToggleTerminal(InputAction.CallbackContext context){

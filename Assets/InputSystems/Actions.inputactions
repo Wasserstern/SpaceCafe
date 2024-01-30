@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseItem",
+                    "type": "Button",
+                    "id": "b83c929e-b730-4e0c-8393-7eba2d96e3b2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -494,6 +503,39 @@
                     "action": "Vertical",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b27b4082-09d2-4d81-8d01-33297d1faa9d",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "391bf99c-6566-48ad-aadb-8ba50ec283fe",
+                    "path": "<XInputController>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b69e7dd-48b3-4752-8ab0-3ac212353513",
+                    "path": "<SwitchProControllerHID>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

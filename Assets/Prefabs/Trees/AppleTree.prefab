@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: -3.5953107, y: 1.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3655354086524972505}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &7744597801715702887
@@ -98,5 +99,42 @@ MonoBehaviour:
   - "F[\u2212F[-F]]F"
   iterations: 3
   angleStep: 20
-  treeGrowTime: 3
-  fruitChance: 0.45
+  treeGrowTime: 180
+  fruitChance: 0.1
+  waterGrowthBoost: 2.5
+  dryTime: 20
+  maxWater: 20
+  currentWater: 0
+  absorbPoint: {fileID: 3655354086524972505}
+  currentGrowTime: 0
+--- !u!1 &6459638536231439289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3655354086524972505}
+  m_Layer: 15
+  m_Name: AbsorbPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3655354086524972505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459638536231439289}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3262604893542483914}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
