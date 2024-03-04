@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public float pickupBoxX;
     public float pickupBoxY;
     public float itemHeight;
+    public float enemyHitForce;
     public float terminalRadius;
     public int maxItems;
     [Range(0f, 90f)]
@@ -122,7 +123,7 @@ public class Player : MonoBehaviour
             GameObject closestItem = null;
             foreach(Collider2D itemCollider in nearbyItemColliders){
                 float itemDistance = Vector2.Distance((Vector2)transform.position, (Vector2)itemCollider.gameObject.transform.position);
-                if(itemDistance < minDistance){
+                if(itemDistance < minDistance && itemCollider.gameObject.GetComponent<Item>().canBeHold){
                     minDistance = itemDistance;
                     closestItem = itemCollider.gameObject;
                 }
@@ -142,6 +143,16 @@ public class Player : MonoBehaviour
         isOnSoil = isGrounded && groundHit.collider.gameObject.layer == LayerMask.NameToLayer("Soil");
         if(isOnSoil){
             nextTreePosition = new Vector2(groundHit.point.x, transform.position.y - plantDepth);
+        }
+
+        // Check if jumped on enemy
+        RaycastHit2D enemyHit = Physics2D.BoxCast(transform.position, new Vector2(col.bounds.size.x, 0.5f), 0f, VariousStuff.DownDirection((Vector2)transform.position), 0.3f, LayerMask.GetMask("Ground", "Item", "Soil", "Platform"));
+        if(enemyHit.collider != null){
+            if(enemyHit.collider.gameObject.tag == "Mintman" && !enemyHit.collider.gameObject.GetComponent<Item>().canBeHold){
+                Mintman mintman = enemyHit.collider.GetComponent<Mintman>();
+                rgbd.AddForce(VariousStuff.UpDirection((Vector2)transform.position) * enemyHitForce, ForceMode2D.Impulse);
+                mintman.Damage();
+            }
         }
 
         if(yInput < 0){

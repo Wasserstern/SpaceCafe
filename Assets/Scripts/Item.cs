@@ -7,11 +7,11 @@ public class Item : MonoBehaviour
 {
     AllManager allmng;
 
-    public enum ItemType {apple, coffeeBeans, coffee, sugar,applePie, wateringCan}
+    public enum ItemType {apple, coffeeBeans, coffee, sugar,applePie, wateringCan, mintman}
     
     public Rigidbody2D rgbd;
     SpriteRenderer spriteRenderer;
-    Collider2D col;
+    public Collider2D col;
     public float weight;
     public float size;
     public float health;
@@ -25,7 +25,7 @@ public class Item : MonoBehaviour
     public bool onTree;
     public bool canBeHarvested;
     public bool canBeHold = true;
-    void Start()
+    protected virtual void Start()
     {
         allmng = GameObject.Find("AllManager").GetComponent<AllManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -35,7 +35,7 @@ public class Item : MonoBehaviour
         rgbd.mass = weight;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if(currentGrowTime >= growTime){
             canBeHarvested = true;
@@ -59,7 +59,7 @@ public class Item : MonoBehaviour
         }
         else{
             float growthFactor = currentGrowTime / growTime;
-            transform.localScale = new Vector3(growthFactor, growthFactor, growthFactor);
+            transform.localScale = new Vector3(growthFactor * size, growthFactor * size, growthFactor * size);
             currentGrowTime += Time.deltaTime;
         }
 

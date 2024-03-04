@@ -99,7 +99,7 @@ MonoBehaviour:
   - "F[\u2212F[-F]]F"
   iterations: 3
   angleStep: 20
-  treeGrowTime: 180
+  treeGrowTime: 5
   fruitChance: 0.1
   waterGrowthBoost: 2.5
   dryTime: 20

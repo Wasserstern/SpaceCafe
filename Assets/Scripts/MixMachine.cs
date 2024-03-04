@@ -74,10 +74,8 @@ public class MixMachine : MonoBehaviour
             foreach(Recipe recipe in allRecipes){
                 Debug.Log(recipe.ingredients);
                 if(recipe.ingredients.Count == i){ // If recipe is targetLength
-                    bool matchPossible = true;
-                    while(matchPossible){
-                        List<int> toRemove = new List<int>();
-                        List<Item.ItemType> recipeCopy = recipe.ingredients;
+                    List<int> toRemove = new List<int>();
+                        List<Item.ItemType> recipeCopy = new List<Item.ItemType>(recipe.ingredients);
                         for(int j = currentItems.Count -1; j >= 0; j--){
                             Item item = currentItems[j];
                             if(recipeCopy.Remove(item.type)){
@@ -87,7 +85,7 @@ public class MixMachine : MonoBehaviour
                                     // Recipe matched!
                                     foreach(int index in toRemove){
                                         Item destroyItem = currentItems[index];
-                                        currentItems.RemoveAt(j);
+                                        currentItems.RemoveAt(index);
                                         Destroy(destroyItem.gameObject);
                                         
                                     }
@@ -96,12 +94,7 @@ public class MixMachine : MonoBehaviour
                                     break;
                                 }
                             }
-                            Debug.Log(recipeCopy.Count);
-                            if(j == 0 && recipeCopy.Count > 0){
-                                matchPossible = false;
-                            }
                         }
-                    }
                 }
                 recipeIndex++;
             }

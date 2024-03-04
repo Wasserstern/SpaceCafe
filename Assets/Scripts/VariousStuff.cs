@@ -8,4 +8,18 @@ public class VariousStuff {
 
         return new Vector2(x2, y2);
     }
+
+    public static Vector2 UpDirection(Vector2 origin){
+        return (new Vector2(origin.x ,origin.y +1f) - origin).normalized;
+    }
+    public static Vector2 DownDirection(Vector2 origin){
+        return (new Vector2(origin.x ,origin.y -1f) - origin).normalized;
+    }
+    public static Vector2 LeftDirection(Vector2 origin){
+        return (new Vector2(origin.x -1f ,origin.y) - origin).normalized;
+
+    }
+    public static Vector2 RightDirection(Vector2 origin){
+        return (new Vector2(origin.x +1f ,origin.y +1f) - origin).normalized;
+    }
 }
