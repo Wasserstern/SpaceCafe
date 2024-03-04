@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
     public float moveAcceleration;
     public float moveDeceleration;
     public float jumpForce;
+    public float invincibleTimer;
     public float throwForce;
     public float groundCheckDistance;
     public float pickupDistance;
@@ -62,6 +64,7 @@ public class Player : MonoBehaviour
     bool isUsingTerminal = false;
     [SerializeField]
     bool isOnSoil = false;
+    bool invincibleTimerRunning = false;
     Vector2 nextTreePosition;
     
     GameObject nearbyItem;
@@ -376,22 +379,40 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Damage(float damage){
-        health -= damage;
-        if(health <= 0f){
-            Destroy(this.gameObject);
+
+    public void Damage(float damage, Vector2 damageSource, float force = 0f){
+        if(!invincibleTimerRunning){
+            health -= damage;
+            if(health > 0f){
+                invincibleTimerRunning = true;
+                Vector2 toPlayerDirection = ((Vector2)transform.position - damageSource).normalized;
+                Vector2 pushPoint = new Vector2(transform.position.x + toPlayerDirection.x, transform.position.y + toPlayerDirection.y);
+                Vector2 pushDirection = (pushPoint - (Vector2)transform.position).normalized;
+                StartCoroutine(DamageTimer(pushDirection * force));
+            }
+            else{
+                // Death animation start
+                StartCoroutine(Death());
+            }
+
         }
     }
-    public void Damage(float damage, Vector2 damageSource){
-        Vector2 toPlayerDirection = ((Vector2)transform.position - damageSource).normalized;
-        Vector2 pushPoint = new Vector2(transform.position.x + toPlayerDirection.x, transform.position.y + toPlayerDirection.y);
-        Vector2 pushDirection = (pushPoint - (Vector2)transform.position).normalized;
 
-        rgbd.AddForce(pushDirection * damage, ForceMode2D.Impulse);
-        health -= damage;
-        if(health <= 0f){
-            Destroy(this.gameObject);
+    private IEnumerator DamageTimer(Vector2 pushForce){
+        // Damage player and push in direction
+        rgbd.AddForce(pushForce, ForceMode2D.Impulse);
+        float startTime = Time.time;
+        float elapsedTime = 0f;
+        while(Time.time - startTime < invincibleTimer){
+            float t = elapsedTime / invincibleTimer;
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+        invincibleTimerRunning = false;
+    }
+    private IEnumerator Death(){
+        // TODO: IMPLEMENT DEATH ANIMATION
+        throw new NotImplementedException();
     }
 
     

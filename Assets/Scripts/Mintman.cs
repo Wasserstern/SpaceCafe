@@ -9,6 +9,7 @@ public class Mintman : Item
     public float sleepTime;
     public float walkSpeed;
     public float damage;
+    public float damageForce;
     public float wallCheckDistance;
     public float maxWallAngle;
     float currentSleepTime;
@@ -69,7 +70,7 @@ public class Mintman : Item
 
     private void OnCollisionEnter2D(Collision2D other){
         if(other.gameObject.layer == LayerMask.NameToLayer("Player")){
-            other.gameObject.GetComponent<Player>().health -= damage;
+            other.gameObject.GetComponent<Player>().Damage(damage, (Vector2)transform.position, damageForce);
         }
     }
 

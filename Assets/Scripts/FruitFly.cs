@@ -6,6 +6,7 @@ public class FruitFly : MonoBehaviour
 {
     public float health;
     public float damage;
+    public float damageForce;
     public float attackInterval;
 
     public float moveTimeInSeconds;
@@ -70,15 +71,18 @@ public class FruitFly : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.layer == LayerMask.NameToLayer("Player")){
-            other.gameObject.GetComponent<Player>().Damage(damage, (Vector2)transform.position);
+            other.gameObject.GetComponent<Player>().Damage(damage, (Vector2)transform.position, damageForce);
         }
     }
     private void OnCollisionEnter2D(Collision2D other){
+
+        //TODO: Remove this.
         if(other.relativeVelocity.magnitude >= damageTreshhold){
             health -= 1f;
             if(health <= 0){
                 Destroy(this.gameObject);
             }
         }
+
     }
 }
